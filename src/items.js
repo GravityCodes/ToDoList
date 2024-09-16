@@ -1,9 +1,9 @@
 class Todo {
 
-    constructor(title, descriptions, dueDate, priority) {
+    constructor(title, description, dueDate, priority) {
         this.title = title;
-        this.descriptions = descriptions;
-        this.dueDate = dueDate;
+        this.description = description;
+        this.dueDate = new Date(dueDate);
         this.priority = priority;
         this.isComplete = false;
     }
@@ -12,21 +12,11 @@ class Todo {
 
     get status() {return this.isComplete};
 
-    get info () {
-        return {
-            Title: this.title,
-            Decription: this.descriptions,
-            DueDate: this.dueDate,
-            Priority: this.priority,
-            IsComplete: this.isComplete,
-        };
-    }
-
 }
 
 class Project extends Todo {
-    constructor(title, descriptions, dueDate, priority, todos) {
-        super(title, descriptions, dueDate, priority);
+    constructor(title, description, dueDate, priority, todos) {
+        super(title, description, dueDate, priority);
         this.todos = todos;
     }
 

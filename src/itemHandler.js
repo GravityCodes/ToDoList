@@ -10,4 +10,4 @@ function createProject (title, descriptions, dueDate, priority, todos) {
 }
 
 
-export {createToDo}
+export {createToDo, createProject}
