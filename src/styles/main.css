@@ -180,7 +180,8 @@ h1:hover {
 
 #todo-container {
     display: grid;
-    grid-template-columns: repeat(2, clamp(1fr, 200px, 700px));
+    width: 100%;
+
     gap: 20px;
 }
 
@@ -226,19 +227,34 @@ h1:hover {
 
 .todo-item-checkbox::after {
     content: "";
-    height: 15px;
-    width: 15px;
+    height: 16px;
+    width: 16px;
     border-radius: var(--border-radius);
     background-color: var(--c-primary-light);
     position: absolute;
-    transform: scale(0) ;
-    transform-origin: center;
+    transform:scale(0) ;
+
     transition: transform 0.5s;
 }
 
 .todo-item-checkbox:checked::after {
-    transform: scale(1) translate(1px, 1px);
-    
+    transform: scale(1) translate(-3.7px, -3.7px);
+}
+
+.completed-item {
+    position: relative;
+}
+.completed-item .todo-item-title {
+    color: var(--c-card-outline);
+}
+.completed-item::before {
+    content: "";
+    height: 3px;
+    width: 98.5%;
+    background-color: var(--c-primary-ligher);
+    position: absolute;
+    transform: translateY(10px);
+    z-index: 1;
 }
 
 /**** END OF TODAY PAGE STYLES ****/
@@ -320,3 +336,5 @@ textarea {
     cursor: pointer;
     padding: 5px;
 }
+
+/**** END OF DIALOG ****/

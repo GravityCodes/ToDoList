@@ -31,7 +31,7 @@
 
     <dialog id="new-task-dialog">
         <p class="dialog-title">Create A New Task</p>
-        <form method="dialog">
+        <form id="new-task-form" method="dialog">
             <div class="item-name item-div">
                 <label for="name">Task</label>
                 <input type="text">
@@ -45,9 +45,8 @@
                 <input type="datetime-local" id="due-date">
             </div>
             <div class="item-priority item-div">
-                <label for="priority">Priority</label>
+                <label for="priority">Select Priority Level</label>
                 <select name="priority" id="priority">
-                    <option value="">--Please Select A Priority Level--</option>
                     <option value="low">Low</option>
                     <option value="medium">Medium</option>
                     <option value="high">High</option>

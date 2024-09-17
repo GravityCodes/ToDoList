@@ -1,4 +1,5 @@
 import pencilSvg from './svg/pencil.svg';
+import { getTodayStorage } from './storageHandler';
 
 function createToDoItem (title, priority) {
     const todoItem = document.createElement("div");
@@ -31,13 +32,16 @@ function createToDoItem (title, priority) {
 
     [todoItemRight, todoItemLeft].forEach(item => todoItem.appendChild(item));
 
-    return todoItem;
+    /** Pop up box */
+
+
+
+    todoContainer.appendChild(todoItem);
 }
 
 
 const container = document.createElement("div");
 container.id = "tp-container";
-
 
 const title = document.createElement("h2");
 title.textContent = "Task Due Today";
@@ -46,17 +50,23 @@ title.id = "tp-title";
 const todoContainer = document.createElement("div");
 todoContainer.id = "todo-container";
 
-
-
-
-
 container.appendChild(title);
 container.appendChild(todoContainer);
 
-todoContainer.appendChild(createToDoItem("Finish To Do List", "High"));
-todoContainer.appendChild(createToDoItem("Make the container a grid", "High"));
-todoContainer.appendChild(createToDoItem("no more checkbox", "High"));
 
+export function renderTodayPage () {
+    let storage = getTodayStorage();
+    let todos = storage;
+    todoContainer.innerHTML = '';
 
+    if(storage === null){
+        return;
+    }
+
+    todos.forEach(todo => createToDoItem(todo.title, todo.priority));
+    
+}
+
+renderTodayPage ()
 export {container}
 
