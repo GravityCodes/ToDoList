@@ -6,6 +6,57 @@
     <title>Todo List</title>
 </head>
 <body>
-    
+    <div id="content">
+        <div id="sidebar">
+            <h1>ToDo List</h1>
+            <div id="sidebar-nav" class="sidebar-item">
+                <div class="nav-item active-nav-link">Today</div>
+                <div class="nav-item">Projects</div>
+                <div class="nav-item">Future Task</div>
+            </div>
+            <div id="sidebar-actions" class="sidebar-item">
+                <button type="button" id="new-task-btn" class="sidebar-actions-btn">New Task</button>
+                <button type="button" id="new-project-btn" class="sidebar-actions-btn">New Project</button>
+            </div>
+            <div id="sidebar-footer" class="sidebar-item">
+                Created by Johan Mesa
+            </div>
+        </div>
+
+        <div id="view">
+
+        </div>
+
+    </div>
+
+    <dialog id="new-task-dialog">
+        <p class="dialog-title">Create A New Task</p>
+        <form method="dialog">
+            <div class="item-name item-div">
+                <label for="name">Task</label>
+                <input type="text">
+            </div>
+            <div class="item-description item-div">
+                <label for="description">Description</label>
+                <textarea name="description" id="description"></textarea>
+            </div>
+            <div class="item-due-date item-div">
+                <label for="due-date">Date</label>
+                <input type="datetime-local" id="due-date">
+            </div>
+            <div class="item-priority item-div">
+                <label for="priority">Priority</label>
+                <select name="priority" id="priority">
+                    <option value="">--Please Select A Priority Level--</option>
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <button id="create-task-btn" type="submit">Create</button>
+        </form>
+    </dialog>
+
 </body>
 </html>
