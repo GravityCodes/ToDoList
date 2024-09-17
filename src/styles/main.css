@@ -28,7 +28,7 @@
     --c-card-bg: #282828;
     --c-card-outline: #4c4c4c ;
 
-    --c-color1: #0eb363;
+    --c-color1: #d7de17;
     --c-color2: #b3110e;
     --c-color3: #b3630e;
     --c-color4: #0eb0b3;
@@ -209,6 +209,7 @@ h1:hover {
 .todo-item-title {
     color: var(--c-primary-light);
     font-size: 1.2em;
+    transition: all 1s;
 }
 
 .todo-item-left img {
@@ -241,21 +242,34 @@ h1:hover {
     transform: scale(1) translate(-3.7px, -3.7px);
 }
 
-.completed-item {
+.todo-item[data-completed = "true"] {
     position: relative;
+    cursor:default;
 }
-.completed-item .todo-item-title {
+.todo-item[data-completed = "true"] .todo-item-title {
     color: var(--c-card-outline);
+    text-decoration: line-through var(--c-primary);
+    text-decoration-thickness: 2px ;
+    
 }
-.completed-item::before {
+
+/*
+#completed-task-container {
+    padding: 30px;
+    padding-left: 0px;
+}
+*/
+
+/* .completed-item::before {
     content: "";
     height: 3px;
-    width: 98.5%;
+    width: 97.5%;
+    border-radius: var(--border-radius);
     background-color: var(--c-primary-ligher);
     position: absolute;
     transform: translateY(10px);
     z-index: 1;
-}
+} */
 
 /**** END OF TODAY PAGE STYLES ****/
 

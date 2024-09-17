@@ -27,13 +27,13 @@ export default (() => {
     $dialog.addEventListener('submit', (e) => formHandler(e));
     
     
-    function completeTask(e){
+    /* function completeTask(e){
         let target = e.target;
         if(target.className === "todo-item"){
             target.classList.add("completed-item");
         }
     }
-    $view.addEventListener('click',e => completeTask(e));
+    $view.addEventListener('click',e => completeTask(e)); */
 
     $content.appendChild(container);
 

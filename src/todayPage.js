@@ -1,22 +1,24 @@
-import pencilSvg from './svg/pencil.svg';
-import { getTodayStorage } from './storageHandler';
+import eyeSvg from './svg/eye.svg';
+import {changeTodayItem, getTodayStorage, refreshLocalStorage } from './storageHandler';
 
-function createToDoItem (title, priority) {
+function createToDoItem (title, priority, index, isComplete) {
     const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");    
+    todoItem.dataset.id = `${index}`;
+    todoItem.dataset.completed = isComplete;
 
     const todoItemRight = document.createElement("div");
     todoItemRight.classList.add("todo-item-right");
 
-    const checkbox = document.createElement("input");
+    /* const checkbox = document.createElement("input");
     checkbox.type = "checkbox";
-    checkbox.classList.add("todo-item-checkbox");
+    checkbox.classList.add("todo-item-checkbox"); */
 
     const todoItemTitle = document.createElement("p");
     todoItemTitle.classList.add("todo-item-title");
     todoItemTitle.textContent = title;
 
-    [checkbox, todoItemTitle].forEach(item => todoItemRight.appendChild(item));
+    [todoItemTitle].forEach(item => todoItemRight.appendChild(item));
 
     const todoItemLeft = document.createElement("div");
     todoItemLeft.classList.add("todo-item-left");
@@ -25,7 +27,7 @@ function createToDoItem (title, priority) {
     todoItemPriority.textContent = priority;
 
     const editItem = document.createElement("img");
-    editItem.src = pencilSvg;
+    editItem.src = eyeSvg;
     editItem.alt = "edit button";
 
     [todoItemPriority, editItem].forEach(item => todoItemLeft.appendChild(item));
@@ -39,7 +41,6 @@ function createToDoItem (title, priority) {
     todoContainer.appendChild(todoItem);
 }
 
-
 const container = document.createElement("div");
 container.id = "tp-container";
 
@@ -50,22 +51,49 @@ title.id = "tp-title";
 const todoContainer = document.createElement("div");
 todoContainer.id = "todo-container";
 
+const completedTaskSection = document.createElement("div");
+completedTaskSection.id = "completed-task-container"
+
+/*
+const completedTaskTitle = document.createElement("h2");
+completedTaskTitle.classList.add("completed-task-title");
+completedTaskTitle.textContent = "Completed Task";
+
+completedTaskSection.appendChild(completedTaskTitle);
+container.appendChild(completedTaskSection);
+*/
+
 container.appendChild(title);
 container.appendChild(todoContainer);
 
 
+function completeTask (e) {  
+    let target = e.target;
+        if(target.className === "todo-item"){
+            target.dataset.completed = "true"
+            changeTodayItem(e.target.dataset.id, true);
+        }
+        else if(target.className === "todo-item-title"){
+            target.parentNode.parentNode.dataset.completed = "true";
+            changeTodayItem(e.target.parentNode.parentNode.dataset.id, true);
+        }    
+}
+todoContainer.addEventListener("click", (e) => completeTask(e));
+
 export function renderTodayPage () {
+
     let storage = getTodayStorage();
-    let todos = storage;
+    console.log(storage);
     todoContainer.innerHTML = '';
 
     if(storage === null){
         return;
     }
 
-    todos.forEach(todo => createToDoItem(todo.title, todo.priority));
+    storage.forEach(todo => createToDoItem(todo.title, todo.priority, storage.indexOf(todo), todo.isComplete));
     
 }
+
 
 renderTodayPage ()
 export {container}
