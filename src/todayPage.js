@@ -41,12 +41,12 @@ function createToDoItem (title, priority, index, isComplete) {
     todoContainer.appendChild(todoItem);
 }
 
-const container = document.createElement("div");
-container.id = "tp-container";
+const todayContainer = document.createElement("div");
+todayContainer.id = "tp-container";
 
 const title = document.createElement("h2");
 title.textContent = "Task Due Today";
-title.id = "tp-title";
+title.classList.add("page-title");
 
 const todoContainer = document.createElement("div");
 todoContainer.id = "todo-container";
@@ -63,8 +63,8 @@ completedTaskSection.appendChild(completedTaskTitle);
 container.appendChild(completedTaskSection);
 */
 
-container.appendChild(title);
-container.appendChild(todoContainer);
+todayContainer.appendChild(title);
+todayContainer.appendChild(todoContainer);
 
 
 function completeTask (e) {  
@@ -96,5 +96,6 @@ export function renderTodayPage () {
 
 
 renderTodayPage ()
-export {container}
+
+export {todayContainer}
 
