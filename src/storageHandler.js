@@ -40,9 +40,20 @@ export function getTodayStorage () {
     
 }
 
+export function getProjectStorage () {
+
+    if(localStorage.getItem("projects") != null) {
+        refreshLocalStorage();
+        return JSON.parse(localStorage.getItem("projects")).filter((task) => task.isComplete === false);
+    }
+
+    return null;
+}
+
 
 function refreshTodayArray () {
     today = JSON.parse(localStorage.getItem('today'));
+    projects = JSON.parse(localStorage.getItem('projects'));
 }
 
 function refreshLocalStorage () {

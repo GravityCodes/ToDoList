@@ -15,8 +15,8 @@ class Todo {
 }
 
 class Project extends Todo {
-    constructor(title, description, dueDate, priority, todos) {
-        super(title, description, dueDate, priority);
+    constructor(title, description, dueDate, priority, todos, isComplete) {
+        super(title, description, dueDate, priority, isComplete);
         this.todos = todos;
     }
 

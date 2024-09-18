@@ -6,8 +6,8 @@ function createToDo (storage, title, descriptions, dueDate, priority) {
     
 }
 
-function createProject (title, descriptions, dueDate, priority, todos) {
-    return new Project(title, descriptions, dueDate, priority, todos);
+function createProject (storage, title, descriptions, dueDate, priority, todos) {
+    addToStorage(storage, new Project(title, descriptions, dueDate, priority, todos));
 }
 
 

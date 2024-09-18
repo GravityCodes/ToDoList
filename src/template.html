@@ -57,5 +57,33 @@
         </form>
     </dialog>
 
+    
+    <dialog id="new-project-dialog">
+        <p class="dialog-title">Create A New Project</p>
+        <form id="new-project-form" method="dialog">
+            <div class="item-name item-div">
+                <label for="name">Project</label>
+                <input type="text">
+            </div>
+            <div class="item-description item-div">
+                <label for="description">Description</label>
+                <textarea name="description" id="description"></textarea>
+            </div>
+            <div class="item-due-date item-div">
+                <label for="due-date">Date</label>
+                <input type="datetime-local" id="due-date">
+            </div>
+            <div class="item-priority item-div">
+                <label for="priority">Select Priority Level</label>
+                <select name="priority" id="priority">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <button id="create-project-btn" type="submit">Create</button>
+        </form>
+    </dialog>
 </body>
 </html>
