@@ -1,5 +1,5 @@
-import {todayContainer, renderTodayPage} from "./todayPage";
-import { projectContainer, renderProjectsPage} from "./projectPage";
+import {todayContainer, renderPage} from "./todayPage";
+import { projectsWrapper, renderProjectsPage} from "./projectPage";
 import { createToDo, createProject } from "./itemProcessor";
 
 
@@ -7,7 +7,7 @@ export default (() => {
     const $content = document.querySelector("#view");
     const $newTaskBtn = document.querySelector("#new-task-btn");
     const $newProjectBtn = document.querySelector("#new-project-btn");
-    const $todayDialog = document.querySelector("#new-task-dialog");
+    const $taskDialog = document.querySelector("#new-task-dialog");
     const $projectDialog = document.querySelector("#new-project-dialog");
     const $sidebarNav = document.querySelector("#sidebar-nav");
     const $navLinks = document.querySelectorAll(".nav-item");
@@ -28,7 +28,7 @@ export default (() => {
                 break;
             case "Projects":
                 renderProjectsPage();
-                $content.appendChild(projectContainer);
+                $content.appendChild(projectsWrapper);
                 break;
             case "Future Task":
                 e.target.classList.add("active-nav-link");
@@ -39,7 +39,7 @@ export default (() => {
 
 
     function newTaskEvent () {
-        $todayDialog.showModal();
+        $taskDialog.showModal();
     }
     $newTaskBtn.addEventListener('click', () => newTaskEvent());
     
@@ -55,10 +55,10 @@ export default (() => {
         let dueDate = e.target[2].value;
         let priority = e.target[3].value;
         createToDo("today",title, description, dueDate, priority);
-        renderTodayPage();
-        $todayDialog.close();
+        renderPage();
+        $taskDialog.close();
     }
-    $todayDialog.addEventListener('submit', (e) => taskFormHandler(e));
+    $taskDialog.addEventListener('submit', (e) => taskFormHandler(e));
     
     function projectFormHandler (e) {
         e.preventDefault();
@@ -67,7 +67,7 @@ export default (() => {
         let dueDate = e.target[2].value;
         let priority = e.target[3].value;
         createProject("projects", title, description, dueDate, priority);
-        renderProjectsPage();
+        renderProjectsPage("projects");
         $projectDialog.close();
     }
     $projectDialog.addEventListener('submit', (e) => projectFormHandler(e));

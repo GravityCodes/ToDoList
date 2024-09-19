@@ -1,14 +1,15 @@
-let today = [];
-let projects = [];
-let futureTask = [];
-
-
 
 export function addToStorage (storage,task) {
-    let section;
+    let array = [];
+    array.push(task);
+
+    if (localStorage.getItem(`${storage}`) === 'null') {
+        localStorage.setItem(`${storage}`, []);
+    }
+    
     let storageArray = JSON.parse(localStorage.getItem(`${storage}`));
-    let storageArrayString = localStorage.getItem(`${storage}`);
-    switch(storage){
+    
+   /* switch(storage){
         case 'today':
             section = today;
             break;
@@ -20,30 +21,46 @@ export function addToStorage (storage,task) {
             break;
         default:
             "ERROR not a storage."
-    }
-    if(storageArrayString != null && storageArrayString != JSON.stringify(section)){
-        section = section.concat(storageArray);
+    } */
+
+
+    if(storageArray != null ){
+        array = array.concat(storageArray);
     }
     
-    section.push(task);
-    localStorage.setItem(`${storage}`, JSON.stringify(section));
+
+    localStorage.setItem(`${storage}`, JSON.stringify(array));
 }
 
-export function getTodayStorage () {
+export function addPageToStorage (storage) {
+    localStorage.setItem(`${storage}`, []);
+}
+
+export function getTodayStorage (arrayName) {
     
-    if(localStorage.getItem("today") != null) {
-        refreshLocalStorage();
-        return JSON.parse(localStorage.getItem("today")).filter((task) => task.isComplete === false);
+    if(localStorage.getItem(`${arrayName}`) != null) {
+        refreshLocalStorage(arrayName);
+        return JSON.parse(localStorage.getItem(`${arrayName}`)).filter((task) => task.isComplete === false);
     }
 
     return null;
     
 }
 
-export function getProjectStorage () {
+export function getProjectStorage (arrayName) {
 
-    if(localStorage.getItem("projects") != null) {
-        refreshLocalStorage();
+    if(localStorage.getItem(`${arrayName}`) != null) {
+        refreshLocalStorage(arrayName);
+        return JSON.parse(localStorage.getItem("projects")).filter((task) => task.isComplete === false);
+    }
+
+    return null;
+}
+
+export function getPageStorage(arrayName) {
+
+    if(localStorage.getItem(`${arrayName}`) != '') {
+        refreshLocalStorage(arrayName);
         return JSON.parse(localStorage.getItem("projects")).filter((task) => task.isComplete === false);
     }
 
@@ -56,14 +73,22 @@ function refreshTodayArray () {
     projects = JSON.parse(localStorage.getItem('projects'));
 }
 
-function refreshLocalStorage () {
-    today = JSON.parse(localStorage.getItem("today")).filter((task) => task.isComplete === false);
-    localStorage.setItem("today", JSON.stringify(today));
+function refreshLocalStorage (arrayName) {
+    let array = [];
+    array = JSON.parse(localStorage.getItem(`${arrayName}`)).filter((task) => task.isComplete === false);
+    localStorage.setItem(`${arrayName}`, JSON.stringify(array));
 }
 
 export function changeTodayItem (index, boolean) {
-    refreshTodayArray();
-    today[index].isComplete = boolean;
+    let array = [];
 
-    localStorage.setItem("today", JSON.stringify(today));
+    array = JSON.parse(localStorage.getItem('today'));
+    
+    array[index].isComplete = boolean;
+
+    localStorage.setItem("today", JSON.stringify(array));
+}
+
+export function searchStorage () {
+    return Object.keys(localStorage)
 }

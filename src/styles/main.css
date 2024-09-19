@@ -156,7 +156,7 @@ h1:hover {
     box-shadow: 0px 0px 10px var(--c-shadow);
 }
 /**** ALL PAGE STYLE ****/
-#tp-container, #p-container {
+#tp-container, #project-wrapper {
     padding: 30px;
 }
 .page-title {
@@ -273,6 +273,66 @@ h1:hover {
 } */
 
 /**** END OF TODAY PAGE STYLES ****/
+
+/**** PROJECTS PAGE STYLES ****/
+
+.project-item {
+    background-color: transparent;
+    color: var(--c-primary-dark);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    row-gap: 10px;
+   
+    border-radius: var(--border-radius);
+    width: 400px;
+    padding: 15px;
+    align-items: center;
+    box-shadow: 0px 0px 10px var(--c-shadow);
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.5s;
+}
+
+.project-item:hover {
+    background-color: var(--c-primary-transparent);
+}
+
+.project-item:active {
+    background-color: var(--c-primary);
+    border: 1px solid var(--c-primary);
+}
+
+.project-item-title {
+    grid-column: span 2;
+    font-size: 1.5em;
+    color: var(--c-primary-ligher);
+    font-weight: 900;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--c-primary);
+    
+}
+
+.project-item-description {
+    grid-column: span 2;
+    color: var(--c-primary-light);
+    padding-bottom: 10px;
+}
+
+.project-due-date {
+    color: var(--c-neutral-1);
+    user-select: none;
+    border-right: 1px solid var(--c-card-outline);
+}
+
+.project-priority {
+    justify-self: end;
+    align-self: end;
+    color: var(--c-color3);
+    user-select: none;
+}
+
+/**** END OF PROJECTS PAGE STYLES ****/
 
 /**** PRIORITIES ******/
 

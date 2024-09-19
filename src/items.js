@@ -15,15 +15,17 @@ class Todo {
 }
 
 class Project extends Todo {
-    constructor(title, description, dueDate, priority, todos, isComplete) {
+    constructor(title, description, dueDate, priority, isComplete) {
         super(title, description, dueDate, priority, isComplete);
-        this.todos = todos;
     }
+}
 
-    AddToDo (todo) {
-        this.todos.append(todo);
+class ProjectPage {
+    constructor(title){
+        this.title = title;
+        this.todos = []
     }
 }
 
 
-export {Todo, Project }
+export {Todo, Project, ProjectPage}

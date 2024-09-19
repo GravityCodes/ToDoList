@@ -1,7 +1,7 @@
 import eyeSvg from './svg/eye.svg';
 import {changeTodayItem, getTodayStorage, refreshLocalStorage } from './storageHandler';
 
-function createToDoItem (title, priority, index, isComplete) {
+export function createToDoItem (title, priority, index, isComplete) {
     const todoItem = document.createElement("div");
     todoItem.classList.add("todo-item");    
     todoItem.dataset.id = `${index}`;
@@ -80,10 +80,9 @@ function completeTask (e) {
 }
 todoContainer.addEventListener("click", (e) => completeTask(e));
 
-export function renderTodayPage () {
+export function renderPage () {
 
-    let storage = getTodayStorage();
-    console.log(storage);
+    let storage = getTodayStorage("today");
     todoContainer.innerHTML = '';
 
     if(storage === null){
@@ -95,7 +94,7 @@ export function renderTodayPage () {
 }
 
 
-renderTodayPage ()
+renderPage ();
 
 export {todayContainer}
 
