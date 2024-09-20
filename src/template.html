@@ -10,9 +10,9 @@
         <div id="sidebar">
             <h1>ToDo List</h1>
             <div id="sidebar-nav" class="sidebar-item">
-                <div class="nav-item active-nav-link">Today</div>
-                <div class="nav-item">Projects</div>
-                <div class="nav-item">Future Task</div>
+                <div id="today-btn" class="nav-item active-nav-link">Today</div>
+                <div id="projects-btn" class="nav-item">Projects</div>
+                <div id="future-task" class="nav-item">Future Task</div>
             </div>
             <div id="sidebar-actions" class="sidebar-item">
                 <button type="button" id="new-task-btn" class="sidebar-actions-btn">New Task</button>
@@ -42,7 +42,7 @@
             </div>
             <div class="item-due-date item-div">
                 <label for="due-date">Date</label>
-                <input type="datetime-local" id="due-date">
+                <input type="date" id="due-date">
             </div>
             <div class="item-priority item-div">
                 <label for="priority">Select Priority Level</label>
