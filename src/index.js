@@ -2,7 +2,7 @@ import "./styles/JohansCSSReset.css";
 import "./styles/main.css";
 import eyeSvg from "./svg/eye.svg";
 import { addNewTaskToStorage, loadStorage } from "./storageHandler";
-import {toDate, isToday } from "date-fns";
+import {toDate, isToday, isFuture } from "date-fns";
 
 const $view = document.querySelector("#view");
 const $newTaskBtn = document.querySelector("#new-task-btn");
@@ -20,6 +20,10 @@ taskContainer.id = "task-container";
 
 function newTask (title, description, dueDate, priority) {
     return {"title": title, "description": description, "dueDate": dueDate, "priority": priority, "isComplete": false}
+}
+
+function newProject (title, description, dueDate, priority) {
+    newTask(title, description, dueDate, priority);
 }
 
 function createTaskItem (title, priority, isComplete, index) {
@@ -56,26 +60,6 @@ function createTaskItem (title, priority, isComplete, index) {
 
 
     return taskItem;
-}
-
-function renderTodayPage () {
-    $view.innerHTML = "";
-    container.innerHTML = "";
-    taskContainer.innerHTML = "";
-    const todayTitle = document.createElement("h2");
-    todayTitle.classList.add("page-title");
-    todayTitle.textContent = "Today";
-
-    if(localStorage.getItem("Task") != null){
-        let index = 0;
-        let task = JSON.parse(localStorage.getItem("Task")).filter(task => isToday(new Date(task.dueDate.split("-").join(","))));
-        task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete, index++)));
-    }
-   
-    
-    container.appendChild(todayTitle);
-    container.appendChild(taskContainer);
-    $view.appendChild(container);
 }
 
 function buildTaskPopUp (task) {
@@ -136,15 +120,92 @@ function addNewTask (e) {
 }
 $newTaskDialog.addEventListener('submit', e => addNewTask(e));
 
+function renderTodayPage () {
+    $view.innerHTML = "";
+    container.innerHTML = "";
+    taskContainer.innerHTML = "";
+    const todayTitle = document.createElement("h2");
+    todayTitle.classList.add("page-title");
+    todayTitle.textContent = "Today";
+
+    if(localStorage.getItem("Task") != null){
+        let index = 0;
+        let task = JSON.parse(localStorage.getItem("Task")).filter(task => isToday(new Date(task.dueDate.split("-").join(","))));
+        task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete, index++)));
+    }
+   
+    
+    container.appendChild(todayTitle);
+    container.appendChild(taskContainer);
+    $view.appendChild(container);
+}
+
 function goToTodayPage(){
     renderTodayPage();
 
+    $projectsNavBtn.classList.remove("active-nav-link");
     $futureNavBtn.classList.remove("active-nav-link");
     $todayNavBtn.classList.add("active-nav-link");
 }
 $todayNavBtn.addEventListener("click", goToTodayPage);
 
+function createProjectItem(title, description, dueDate, priority, index) {
+    const projectItem = document.createElement("div");
+    projectItem.classList.add("project-item");    
+    projectItem.dataset.completed = isComplete;
+    projectItem.dataset.index = index;
 
+    const projectItemTitle = document.createElement("p");
+    projectItemTitle.classList.add("project-item-title");
+    projectItemTitle.textContent = title;
+
+    const projectDescription = document.createElement("p");
+    projectDescription.classList.add("project-item-description");
+    projectDescription.textContent = description;
+
+    const projectDueDate = document.createElement("p");
+    projectDueDate.classList.add("project-due-date");
+    projectDueDate.textContent = dueDate;
+
+    const projectItemPriority = document.createElement("p");
+    projectItemPriority.textContent = priority;
+
+    [projectItemTitle,projectDescription, projectDueDate, projectItemPriority].forEach(element => projectItem.appendChild(element));
+
+    return projectItem;
+}
+
+function renderProjectPage() {
+    $view.innerHTML = "";
+    container.innerHTML = "";
+    taskContainer.innerHTML = "";
+
+    const projectTitle = document.createElement("h2");
+    projectTitle.classList.add("page-title");
+    projectTitle.textContent = "Projects";
+
+    const projectContainer = document.createElement("div");
+    projectContainer.id = "project-container";
+
+    if(localStorage.getItem("Projects") != null){
+        let index = 0;
+        let projects = JSON.parse(localStorage.getItem("Projects"));
+        projects.forEach(project => taskContainer.appendChild(createProjectItem(project.title,project.description,project.dueDate,project.priority,index++)));
+    }
+
+    container.appendChild(projectTitle);
+    container.appendChild(taskContainer);
+    $view.appendChild(container);
+}
+
+function goToProjectPage () {
+    renderProjectPage();
+
+    $todayNavBtn.classList.remove("active-nav-link");
+    $futureNavBtn.classList.remove("active-nav-link");
+    $projectsNavBtn.classList.add("active-nav-link");
+}
+$projectsNavBtn.addEventListener("click", goToProjectPage);
 
 function renderFutureTaskPage () {
     $view.innerHTML = "";
@@ -157,7 +218,7 @@ function renderFutureTaskPage () {
 
     if(localStorage.getItem("Task") != null){
         let index = 0;
-        let task = JSON.parse(localStorage.getItem("Task")).filter(task => !isToday(new Date(task.dueDate.split("-").join(","))));
+        let task = JSON.parse(localStorage.getItem("Task")).filter(task => isFuture(new Date(task.dueDate.split("-").join(","))));
         task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete, index++)));
     }
     
@@ -170,6 +231,7 @@ function renderFutureTaskPage () {
 function goToFutureTaskPage(){
     renderFutureTaskPage();
 
+    $projectsNavBtn.classList.remove("active-nav-link");
     $todayNavBtn.classList.remove("active-nav-link");
     $futureNavBtn.classList.add("active-nav-link");
 }
