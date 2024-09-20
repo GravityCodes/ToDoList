@@ -1,7 +1,7 @@
 import "./styles/JohansCSSReset.css";
 import "./styles/main.css";
 import eyeSvg from "./svg/eye.svg";
-import { addNewTaskToStorage } from "./storageHandler";
+import { addNewTaskToStorage, loadStorage } from "./storageHandler";
 import {toDate, isToday } from "date-fns";
 
 const $view = document.querySelector("#view");
@@ -22,12 +22,12 @@ function newTask (title, description, dueDate, priority) {
     return {"title": title, "description": description, "dueDate": dueDate, "priority": priority, "isComplete": false}
 }
 
-function createTaskItem (title, priority, isComplete) {
+function createTaskItem (title, priority, isComplete, index) {
 
     const taskItem = document.createElement("div");
     taskItem.classList.add("task-item");    
     taskItem.dataset.completed = isComplete;
-
+    taskItem.dataset.index = index;
     const taskItemRight = document.createElement("div");
     taskItemRight.classList.add("task-item-right");
 
@@ -46,6 +46,7 @@ function createTaskItem (title, priority, isComplete) {
 
     const editItem = document.createElement("img");
     editItem.src = eyeSvg;
+    editItem.classList.add("view");
     editItem.alt = "edit button";
 
     [taskItemPriority, editItem].forEach(item => taskItemLeft.appendChild(item));
@@ -66,8 +67,9 @@ function renderTodayPage () {
     todayTitle.textContent = "Today";
 
     if(localStorage.getItem("Task") != null){
+        let index = 0;
         let task = JSON.parse(localStorage.getItem("Task")).filter(task => isToday(new Date(task.dueDate.split("-").join(","))));
-        task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete)));
+        task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete, index++)));
     }
    
     
@@ -76,7 +78,38 @@ function renderTodayPage () {
     $view.appendChild(container);
 }
 
+function buildTaskPopUp (task) {
+    const taskDialog = document.createElement("dialog");
+    taskDialog.classList.add("task-pop-up");
 
+    const taskTitle = document.createElement("p");
+    const taskDescription = document.createElement("p");
+    const taskPriority = document.createElement("p");
+
+    taskTitle.classList.add("dialog-task-title");
+    taskDescription.classList.add("dialog-task-description");
+    taskPriority.classList.add("dialog-task-priority");
+
+    taskTitle.textContent = task.title;
+    taskDescription.textContent = task.description;
+    taskPriority.textContent = task.priority;
+
+    taskDialog.appendChild(taskTitle);
+    taskDialog.appendChild(taskDescription);
+    taskDialog.appendChild(taskPriority);
+
+    $view.appendChild(taskDialog);
+    taskDialog.showModal();
+}
+
+function openTask (e) {
+    if(e.target.className === "view"){
+        let storage = loadStorage("Task").filter(task => isToday(new Date(task.dueDate.split("-").join(","))));
+        let task = storage[e.target.parentNode.parentNode.dataset.index];
+        buildTaskPopUp(task);
+    }
+}
+taskContainer.addEventListener('click', e => openTask(e));
 
 function openDialog () {
     $newTaskDialog.showModal();
@@ -89,7 +122,7 @@ function addNewTask (e) {
     let description = e.target[1].value;
     let dueDate = e.target[2].value;
     let priority = e.target[3].value;
-    
+
     addNewTaskToStorage(newTask(title, description, dueDate, priority));
 
     if (isToday(new Date(dueDate.split("-").join(",")))) {
@@ -123,8 +156,9 @@ function renderFutureTaskPage () {
     futureTaskTitle.textContent = "Future Task";
 
     if(localStorage.getItem("Task") != null){
+        let index = 0;
         let task = JSON.parse(localStorage.getItem("Task")).filter(task => !isToday(new Date(task.dueDate.split("-").join(","))));
-        task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete)));
+        task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete, index++)));
     }
     
     

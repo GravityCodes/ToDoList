@@ -14,5 +14,9 @@ function addNewTaskToStorage (task) {
     localStorage.setItem("Task", JSON.stringify(array));
 }
 
-export {addNewTaskToStorage}
+function loadStorage (storage) {
+    return JSON.parse(localStorage.getItem(storage));
+}
+
+export {addNewTaskToStorage, loadStorage}
 
