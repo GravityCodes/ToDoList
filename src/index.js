@@ -1,12 +1,14 @@
 import "./styles/JohansCSSReset.css";
 import "./styles/main.css";
 import eyeSvg from "./svg/eye.svg";
-import { addNewTaskToStorage, loadStorage } from "./storageHandler";
+import { addNewTaskToStorage, loadStorage, addNewProjectToStorage } from "./storageHandler";
 import {toDate, isToday, isFuture } from "date-fns";
 
 const $view = document.querySelector("#view");
 const $newTaskBtn = document.querySelector("#new-task-btn");
 const $newTaskDialog = document.querySelector("#new-task-dialog");
+const $newProjectBtn = document.querySelector("#new-project-btn");
+const $newProjectDialog = document.querySelector("#new-project-dialog");
 const $todayNavBtn = document.querySelector("#today-btn");
 const $projectsNavBtn = document.querySelector("#projects-btn");
 const $futureNavBtn = document.querySelector("#future-task")
@@ -23,7 +25,7 @@ function newTask (title, description, dueDate, priority) {
 }
 
 function newProject (title, description, dueDate, priority) {
-    newTask(title, description, dueDate, priority);
+    return newTask(title, description, dueDate, priority);
 }
 
 function createTaskItem (title, priority, isComplete, index) {
@@ -120,6 +122,8 @@ function addNewTask (e) {
 }
 $newTaskDialog.addEventListener('submit', e => addNewTask(e));
 
+
+
 function renderTodayPage () {
     $view.innerHTML = "";
     container.innerHTML = "";
@@ -149,10 +153,30 @@ function goToTodayPage(){
 }
 $todayNavBtn.addEventListener("click", goToTodayPage);
 
+function addNewProject(e) {
+    e.preventDefault();
+    let title = e.target[0].value;
+    let description = e.target[1].value;
+    let dueDate = e.target[2].value;
+    let priority = e.target[3].value;
+
+    addNewProjectToStorage(newProject(title, description, dueDate, priority));
+
+    renderProjectPage();
+
+    $newProjectDialog.close();
+}
+$newProjectDialog.addEventListener('submit', e => addNewProject(e));
+
+function openProjectDialog (){
+    $newProjectDialog.showModal();
+}
+$newProjectBtn.addEventListener('click', openProjectDialog);
+
 function createProjectItem(title, description, dueDate, priority, index) {
     const projectItem = document.createElement("div");
     projectItem.classList.add("project-item");    
-    projectItem.dataset.completed = isComplete;
+    projectItem.dataset.completed = false;
     projectItem.dataset.index = index;
 
     const projectItemTitle = document.createElement("p");
@@ -168,6 +192,7 @@ function createProjectItem(title, description, dueDate, priority, index) {
     projectDueDate.textContent = dueDate;
 
     const projectItemPriority = document.createElement("p");
+    projectItemPriority.classList.add("project-priority");
     projectItemPriority.textContent = priority;
 
     [projectItemTitle,projectDescription, projectDueDate, projectItemPriority].forEach(element => projectItem.appendChild(element));
