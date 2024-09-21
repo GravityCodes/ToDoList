@@ -141,9 +141,11 @@ pageController.renderTodayPage();
 
 // THEME CONTROLLER
 const themeToggle = document.querySelector("#dark-theme-btn");
-setTheme(getTheme());
+
 
 (function setPageTheme () {
+    setTheme(getTheme());
+    
     let theme = getTheme();
 
     if(theme === "light"){

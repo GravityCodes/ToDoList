@@ -43,9 +43,11 @@ function removeProject (projectName) {
 }
 
 function setTheme (theme = "light") {
-    if (localStorage.getItem("theme") === null) {
-        localStorage.setItem("theme", theme);
+    if (localStorage.getItem("theme") === "null" || theme === "null") {
+        localStorage.setItem("theme", "light");
+        return;
     }
+
     localStorage.setItem("theme", theme);
 }
 
