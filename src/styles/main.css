@@ -179,10 +179,11 @@ h1:hover {
 
 /**** TODAY PAGE STYLES ****/
 
-#task-container {
+#task-container, #project-container{
     display: grid;
     width: 100%;
-
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 700px));
     gap: 20px;
 }
 
@@ -195,7 +196,6 @@ h1:hover {
     box-shadow: 0px 2px 5px var(--c-shadow);
     cursor: pointer;
     user-select: none;
- 
     border-radius: var(--border-radius);
 }
 
@@ -214,36 +214,12 @@ h1:hover {
 }
 
 .task-item-left img {
-    width: 19px;
+    border-left: 1px solid var(--c-card-outline);
+    padding-left: 15px;
+    width: 40px;
 }
 
-/*
-.task-item-checkbox {
-    appearance: none;
-    position: relative;
-    border: 1px solid var(--c-card-outline);
-    width: 20px;
-    height: 20px;
-    border-radius: var(--border-radius);
-    cursor: pointer;
-}
 
-.todo-item-checkbox::after {
-    content: "";
-    height: 16px;
-    width: 16px;
-    border-radius: var(--border-radius);
-    background-color: var(--c-primary-light);
-    position: absolute;
-    transform:scale(0) ;
-
-    transition: transform 0.5s;
-}
-
-.todo-item-checkbox:checked::after {
-    transform: scale(1) translate(-3.7px, -3.7px);
-}
-*/
 
 .task-item[data-completed = "true"] {
     position: relative;
@@ -256,23 +232,7 @@ h1:hover {
     
 }
 
-/*
-#completed-task-container {
-    padding: 30px;
-    padding-left: 0px;
-}
-*/
 
-/* .completed-item::before {
-    content: "";
-    height: 3px;
-    width: 97.5%;
-    border-radius: var(--border-radius);
-    background-color: var(--c-primary-ligher);
-    position: absolute;
-    transform: translateY(10px);
-    z-index: 1;
-} */
 
 /**** END OF TODAY PAGE STYLES ****/
 
@@ -294,6 +254,7 @@ h1:hover {
     cursor: pointer;
     user-select: none;
     transition: background-color 0.5s;
+    position: relative;
 }
 
 .project-item:hover {
@@ -308,7 +269,7 @@ h1:hover {
 .project-item-title {
     grid-column: span 2;
     font-size: 1.5em;
-    color: var(--c-primary-ligher);
+    color: var(--c-primary-light);
     font-weight: 900;
     padding-bottom: 5px;
     border-bottom: 1px solid var(--c-primary);
@@ -317,36 +278,61 @@ h1:hover {
 
 .project-item-description {
     grid-column: span 2;
-    color: var(--c-primary-light);
+    color: var(--c-primary-ligher);
     padding-bottom: 10px;
 }
 
 .project-due-date {
-    color: var(--c-neutral-1);
+    color: var(--c-primary-ligher);
     user-select: none;
     border-right: 1px solid var(--c-card-outline);
 }
 
 .project-priority {
     justify-self: end;
-    align-self: end;
+    align-self: center;
     color: var(--c-color3);
     user-select: none;
 }
+
+.project-delete-btn {
+    position: absolute;
+    top: 20px;
+    left: 360px;
+    height: 20px;
+}
+
+.project-item[data-completed="true"] {
+    background-color: rgba(255, 0, 0, 0.38);
+}
+.project-item[data-completed="true"] .project-item-title, .project-item-description, .project-due-date {
+    color: rgb(171, 171, 171);
+    border-color: rgb(171, 171, 171);
+}
+
 
 /**** END OF PROJECTS PAGE STYLES ****/
 
 /**** PRIORITIES ******/
 
-.high {
+.task-item[data-priority = "high"] .high {
+    border-left: 1px solid var(--c-card-outline);
+    padding-left: 15px;
+    height: 25px;
     color: var(--c-color2);
 }
 
-.medium {
+.task-item[data-priority = "medium"] .medium {
+    border-left: 1px solid var(--c-card-outline);
+    padding-left: 15px;
+    height: 25px;
     color: var(--c-color3);
 }
 
-.low {
+.task-item[data-priority = "low"] .low {
+    border-left: 1px solid var(--c-card-outline);
+    padding-left: 15px;
+    height: 25px;
     color: var(--c-color4);
 }
 
@@ -363,8 +349,11 @@ dialog {
     border-radius: var(--border-radius);
     color: var(--c-primary-ligher);
     width: 400px;
-    height: 550px;
     box-shadow: 0px 0px 10px var(--c-shadow);
+}
+
+#new-project-dialog {
+    height: 450px;
 }
 
 dialog::backdrop {
@@ -380,6 +369,21 @@ dialog::backdrop {
     border-bottom: 1px solid var(--c-card-outline);
     margin-bottom: 5px;
 }
+
+.dialog-close-btn {
+    position: absolute;
+    left: 365px;
+    top: 20px;
+    font-weight: 900;
+    cursor: pointer;
+    user-select: none;
+}
+
+.dialog-close-btn:hover {
+    color: var(--c-primary-light);
+
+}
+
 
 form {
     display: flex;
@@ -405,7 +409,7 @@ textarea {
     margin-bottom: 15px;
 }
 
-#create-task-btn {
+#create-task-btn, #create-project-btn {
     border: none;
     background-color: var(--c-primary);
     color: var(--c-neutral-1);
@@ -414,4 +418,21 @@ textarea {
     padding: 5px;
 }
 
+#task-pop-up {
+    padding: 30px;
+    
+}
+.dialog-task-title {
+    font-size: 1.3em;
+    color: var(--c-primary-light);
+    font-weight: 900;
+    margin-bottom: 10px;
+}
+
+.dialog-task-description {
+    background: var(--c-card-outline);
+    padding: 5px;
+    border-radius: var(--border-radius);
+    margin-bottom: 10px;
+}
 /**** END OF DIALOG ****/

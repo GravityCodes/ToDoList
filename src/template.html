@@ -13,6 +13,7 @@
                 <div id="today-btn" class="nav-item active-nav-link">Today</div>
                 <div id="projects-btn" class="nav-item">Projects</div>
                 <div id="future-task" class="nav-item">Future Task</div>
+                <div id="overdue-task" class="nav-item">Overdue Task</div>
             </div>
             <div id="sidebar-actions" class="sidebar-item">
                 <button type="button" id="new-task-btn" class="sidebar-actions-btn">New Task</button>
@@ -30,6 +31,7 @@
     </div>
 
     <dialog id="new-task-dialog">
+        <div class="dialog-close-btn"> x </div>
         <p class="dialog-title">Create A New Task</p>
         <form id="new-task-form" method="dialog">
             <div class="item-name item-div">
@@ -64,6 +66,7 @@
 
     
     <dialog id="new-project-dialog">
+        <div class="dialog-close-btn"> x </div>
         <p class="dialog-title">Create A New Project</p>
         <form id="new-project-form" method="dialog">
             <div class="item-name item-div">
@@ -81,9 +84,9 @@
             <div class="item-priority item-div">
                 <label for="priority">Select Priority Level</label>
                 <select name="priority" id="priority">
-                    <option value="low">Low</option>
-                    <option value="medium">Medium</option>
-                    <option value="high">High</option>
+                    <option value="Low">Low</option>
+                    <option value="Medium">Medium</option>
+                    <option value="High">High</option>
                 </select>
             </div>
 

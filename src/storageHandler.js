@@ -1,7 +1,4 @@
 //Storage defaults
-
-
-
 function addNewTaskToStorage (task) {
     let array = [];
     if(localStorage.getItem("Task") != null) {
@@ -9,8 +6,6 @@ function addNewTaskToStorage (task) {
     }
 
     array.push(task);
-
-    console.log(array)
     localStorage.setItem("Task", JSON.stringify(array));
 }
 
@@ -29,5 +24,23 @@ function loadStorage (storage) {
     return JSON.parse(localStorage.getItem(storage));
 }
 
-export {addNewTaskToStorage, loadStorage, addNewProjectToStorage}
+function removeTask (taskName) {
+    let allTask = loadStorage("Task");
+    let newTask = allTask.filter(task => task.title != taskName);
+    
+    localStorage.setItem("Task", JSON.stringify(newTask));
+}
+
+function removeProject (projectName) {
+    let allProjects = loadStorage("Projects");
+    let newProjects = allProjects.filter(project => project.title != projectName);
+
+    let allTask = loadStorage("Task");
+    let newTask = allTask.filter(task => task.project != projectName);
+    
+    localStorage.setItem("Projects", JSON.stringify(newProjects));
+    localStorage.setItem("Task", JSON.stringify(newTask));
+}
+
+export {addNewTaskToStorage, loadStorage, addNewProjectToStorage, removeTask, removeProject}
 
