@@ -46,9 +46,7 @@ function setTheme (theme = "light") {
     if (localStorage.getItem("theme") === null) {
         localStorage.setItem("theme", theme);
     }
-
     localStorage.setItem("theme", theme);
-    
 }
 
 function getTheme () {
