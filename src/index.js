@@ -3,6 +3,7 @@ import "./styles/main.css";
 import { addNewTaskToStorage, loadStorage, addNewProjectToStorage } from "./storageHandler";
 import {toDate, isToday, isFuture } from "date-fns";
 import * as pageController from "./pageController";
+import { setTheme, getTheme } from "./storageHandler";
 
 
 const $newTaskBtn = document.querySelector("#new-task-btn");
@@ -138,3 +139,49 @@ function goToOverDueTaskPage (){
 $overDueBtn.addEventListener('click', goToOverDueTaskPage);
 pageController.renderTodayPage();
 
+// THEME CONTROLLER
+const themeToggle = document.querySelector("#dark-theme-btn");
+
+(function setTheme () {
+    let theme = getTheme();
+
+    if(theme === "light"){
+        lightTheme();
+    }
+    else if(theme === "dark"){
+        darkTheme();
+    }
+})();
+
+function lightTheme (){
+    document.documentElement.style.setProperty('--c-page-bg:', '#d6d6d6');
+    document.documentElement.style.setProperty('--c-card-bg', '#ececec');
+    document.documentElement.style.setProperty('--c-neutral-1', '#242424');
+    document.documentElement.style.setProperty('--c-neutral-2','#242424');
+    document.documentElement.style.setProperty('--c-primary-light', '#630eb3');
+    document.documentElement.style.setProperty('--c-primary-ligher','#9d38f5');
+    document.documentElement.style.setProperty('--c-card-outline', '#afafaf');
+    document.documentElement.style.setProperty('--c-shadow','#898989');
+}
+function darkTheme () {
+    document.documentElement.style.setProperty('--c-page-bg', '#1f1f1f');
+    document.documentElement.style.setProperty('--c-card-bg', '#282828');
+    document.documentElement.style.setProperty('--c-neutral-1', 'white');
+    document.documentElement.style.setProperty('--c-neutral-2','rgb(150, 150, 150)');
+    document.documentElement.style.setProperty('--c-primary-light', '#c88bfc');
+    document.documentElement.style.setProperty('--c-shadow','#161616');
+}
+
+function toggleTheme (){
+    let theme = getTheme();
+    if(theme === "light"){
+        darkTheme();
+        setTheme("dark");
+    }
+    else if (theme === "dark"){
+        lightTheme();
+        setTheme("light");
+    }
+    location.reload();
+}
+themeToggle.addEventListener('click', toggleTheme );

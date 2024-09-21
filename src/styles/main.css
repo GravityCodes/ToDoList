@@ -23,18 +23,13 @@
     --c-primary-light: #c88bfc;
     --c-primary-ligher: #f4e7ff;
     --c-secondary: #d1c0e0;
-    --c-page-bg: #1f1f1f;
-    --c-shadow: #161616;
-    --c-card-bg: #282828;
+    --test-c: #9d38f5;
     --c-card-outline: #4c4c4c ;
 
     --c-color1: #d7de17;
     --c-color2: #b3110e;
     --c-color3: #b3630e;
     --c-color4: #0eb0b3;
-
-    --c-neutral-1: white;
-    --c-neutral-2: rgb(150, 150, 150);
     --border-radius: 10px;
     
 }
@@ -105,7 +100,7 @@ h1:hover {
 
 
 #sidebar-actions {
-    height: 150px;
+    height: 250px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -115,10 +110,10 @@ h1:hover {
 
 .sidebar-actions-btn {
     width: 150px;
-    border: 2px solid var(--c-primary);
+    border: 2px solid var(--c-primary-light);
     border-radius: var(--border-radius);
     background-color: transparent;
-    color: var(--c-primary);
+    color: var(--c-primary-light);
     cursor: pointer;
     padding: 10px;
     transform: scale(1);
@@ -128,8 +123,8 @@ h1:hover {
 }
 
 .sidebar-actions-btn:hover {
-    background-color: var(--c-primary);
-    color: var(--c-card-bg);
+    background-color: var(--c-primary-light);
+    color: var(--c-neutral-1);
 }
 
 .nav-item:active, .sidebar-actions-btn:active {
@@ -155,6 +150,18 @@ h1:hover {
     border-radius: var(--border-radius);
     box-shadow: 0px 0px 10px var(--c-shadow);
 }
+
+#dark-theme-btn {
+    width: 150px;
+    background-color: #c88bfc;
+    border: none;
+
+    border-radius: var(--border-radius);
+    color: var(--c-neutral-1);
+    cursor: pointer;
+    user-select: none;
+}
+
 /**** ALL PAGE STYLE ****/
 #container {
     padding: 30px;
@@ -173,6 +180,25 @@ h1:hover {
 
 .page-title:hover {
     color: var(--c-primary);
+}
+
+#empty-page-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.empty-page-title {
+    width: 100%;
+    text-align: center;
+    color: var(--c-neutral-1);
+    font-size: 2em;
+}
+
+.empty-page-text {
+    text-align: center;
+    margin-top: 20px;
+    font-style: italic;
+    font-size: 1.2em;
 }
 
 /**** END OF ALL PAGE STYLES ****/
@@ -305,7 +331,7 @@ h1:hover {
 .project-item[data-completed="true"] {
     background-color: rgba(255, 0, 0, 0.38);
 }
-.project-item[data-completed="true"] .project-item-title, .project-item-description, .project-due-date {
+.project-item[data-completed="true"] .project-item-title .project-item-description .project-due-date {
     color: rgb(171, 171, 171);
     border-color: rgb(171, 171, 171);
 }

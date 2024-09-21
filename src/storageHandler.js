@@ -42,5 +42,18 @@ function removeProject (projectName) {
     localStorage.setItem("Task", JSON.stringify(newTask));
 }
 
-export {addNewTaskToStorage, loadStorage, addNewProjectToStorage, removeTask, removeProject}
+function setTheme (theme = "light") {
+    if (localStorage.getItem("theme") === null) {
+        localStorage.setItem("theme", theme);
+    }
+
+    localStorage.setItem("theme", theme);
+    
+}
+
+function getTheme () {
+    return localStorage.getItem("theme");
+}
+
+export {addNewTaskToStorage, loadStorage, addNewProjectToStorage, removeTask, removeProject, setTheme, getTheme}
 

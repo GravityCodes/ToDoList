@@ -1,5 +1,7 @@
 import eyeSvg from "./svg/eye.svg";
 import trashSvg from "./svg/trash.svg";
+import emptyPageImg from "./svg/emptyPageImg.svg";
+
 import {format, isToday, isFuture, isPast } from "date-fns";
 import { addNewTaskToStorage, loadStorage, addNewProjectToStorage, removeTask, removeProject } from "./storageHandler";
 import { $futureNavBtn, $overDueBtn, $projectsNavBtn, $todayNavBtn } from ".";
@@ -138,10 +140,15 @@ function renderTodayPage () {
         let task = loadStorage("Task").filter(task => isToday(new Date(task.dueDate.split("-").join(","))));
         task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete, index++,task.project)));
     }
+    
    
     
     container.appendChild(todayTitle);
     container.appendChild(taskContainer);
+    if(taskContainer.innerHTML === "") {
+        
+        loadEmptyTaskPage();
+    }
     $view.appendChild(container);
 }
 
@@ -199,6 +206,10 @@ function renderProjectPage() {
 
     container.appendChild(projectTitle);
     container.appendChild(projectContainer);
+    if(projectContainer.innerHTML === "") {
+        
+        loadEmptyTaskPage("projects");
+    }
     $view.appendChild(container);
 }
 
@@ -220,6 +231,10 @@ function renderFutureTaskPage () {
     
     container.appendChild(futureTaskTitle);
     container.appendChild(taskContainer);
+    if(taskContainer.innerHTML === "") {
+        
+        loadEmptyTaskPage("futureTask");
+    }
     $view.appendChild(container);
 }
 
@@ -242,6 +257,10 @@ function renderTaskPageForProject (project) {
 
     container.appendChild(todayTitle);
     container.appendChild(taskContainer);
+    if(taskContainer.innerHTML === "") {
+        
+        loadEmptyTaskPage();
+    }
     $view.appendChild(container);
 }
 
@@ -279,14 +298,46 @@ function renderOverDueTaskPage (){
         let index = 0;
         let task = loadStorage("Task").filter(task => isPast(new Date(task.dueDate.split("-").join(","))))
                                       .filter(task => !isToday(new Date(task.dueDate.split("-").join(","))));
-
         task.forEach(task => taskContainer.appendChild(createTaskItem(task.title,task.priority, task.isComplete, index++,task.project)));
     }
-   
+
     
     container.appendChild(todayTitle);
     container.appendChild(taskContainer);
+    if(taskContainer.innerHTML === "") {
+        
+        loadEmptyTaskPage("overDue");
+    }
     $view.appendChild(container);
+}
+
+function loadEmptyTaskPage (page = "today") {
+    const emptyPageContainer = document.createElement("div");
+    emptyPageContainer.id = "empty-page-container";
+
+    const title = document.createElement("h2");
+    title.classList.add("empty-page-title");
+    if(page === "today"){
+        title.textContent = "Looks like you're all done for the day!";
+    }
+    else if(page === "overDue"){
+        title.textContent = "Good Job! You have no overdue task.";
+    }
+    else if(page === "futureTask") {
+        title.textContent = "Nothing to worry about! You have no future task.";
+    }
+    else if(page === "projects") {
+        title.textContent = "You have no projects."
+    }
+   
+    
+    const text = document.createElement("p");
+    text.classList.add("empty-page-text");
+    text.textContent = "Click the new task or project button to get started.";
+
+    emptyPageContainer.appendChild(title);
+    emptyPageContainer.appendChild(text);
+    container.appendChild(emptyPageContainer);
 }
 
 export {newTask, newProject, createTaskItem, buildTaskPopUp, renderTodayPage, renderFutureTaskPage, renderProjectPage, renderTaskPageForProject, renderOverDueTaskPage}
